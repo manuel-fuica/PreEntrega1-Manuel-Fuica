@@ -1,0 +1,43 @@
+h1{
+    text-align: center;
+    text-decoration: underline;
+}
+
+body {
+    background-color: #000000;
+}
+
+.simulador {
+    display: grid;
+    color: #81FE02;
+    grid-template-columns: 1 fr;
+    grid-template-rows: 1 fr;
+}
+
+.imagenes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.imagenes img{
+    width: 250px;
+    height: 200px;
+    border-radius: 30px;
+}
+
+.boton{
+    display: flex;
+    justify-content: center;
+}
+.boton button{
+    width: 300px;
+    height: 30px;
+    background-color: #81FE02;
+    border-radius: 30px;
+}
+
+
+
