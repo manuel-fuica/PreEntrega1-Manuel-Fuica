@@ -53,7 +53,7 @@ function agregarProducto() {
     alert("Producto agregado al carrito: \n" + " " + productoSeleccionado.nombre + " \n Cantidad: " + productoSeleccionado.cantidad + "\n Total a pagar: $" + productoSeleccionado.precio);
 }
 
-function devolverProducto() {
+function devolverProducto() {//funcion par devolver el producto
     alert("Deberá ingresar sus datos para coordinar la devolución del producto");
 
     const nombre = prompt("Ingrese su nombre completo");
@@ -62,33 +62,33 @@ function devolverProducto() {
     alert("Estimad@ " + nombre + "\nPronto uno de nuestros ejecutivos se contactará con usted, al numero de telefono " + telefono + " para coordinar la devolución del producto.\n Muchas gracias");
 }
 
-function mostrarCarrito() {
+function mostrarCarrito() {//funcion para mostrar el carrito
     let preciosTotales = {};
     for (let i = 0; i < carrito.length; i++) {
         let producto = carrito[i];
         if (preciosTotales[producto.nombre]) {
-            preciosTotales[producto.nombre] += producto.precio * producto.cantidad;
+            preciosTotales[producto.nombre] += producto.precio;
         } else {
-            preciosTotales[producto.nombre] = producto.precio * producto.cantidad;
+            preciosTotales[producto.nombre] = producto.precio;
         }
     }
     let total = 0;
     let mensaje = "Productos en el carrito:\n";
     for (let nombre in preciosTotales) {
         let precioTotal = preciosTotales[nombre];
-        mensaje += nombre + ": " + precioTotal.toFixed(2) + "\n";
+        mensaje += nombre + ": $ " + precioTotal + "\n";
         total += precioTotal;
     }
-    mensaje += "\nPrecio total: " + total.toFixed(2);
+    mensaje += "\nPrecio total: $ " + total;
     alert(mensaje);
 }
 
-function pagar() {
+function pagar() {//funcion para pagar
     if (carrito.length === 0) {
         alert("No hay productos en el carrito.");
     } else {
         alert("Pago exitoso.\n Muchas gracias por su compra.");
-        carrito.length = 0; // vacia el carrito para cerrar el programa
+        carrito.length = 0; // vacio el carrito para cerrar el programa
         return;
     }
 }
