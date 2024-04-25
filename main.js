@@ -63,19 +63,19 @@ function devolverProducto() {
 }
 
 function mostrarCarrito() {
-    var preciosTotales = {};
-    for (var i = 0; i < carrito.length; i++) {
-        var producto = carrito[i];
+    let preciosTotales = {};
+    for (let i = 0; i < carrito.length; i++) {
+        let producto = carrito[i];
         if (preciosTotales[producto.nombre]) {
             preciosTotales[producto.nombre] += producto.precio * producto.cantidad;
         } else {
             preciosTotales[producto.nombre] = producto.precio * producto.cantidad;
         }
     }
-    var total = 0;
-    var mensaje = "Productos en el carrito:\n";
-    for (var nombre in preciosTotales) {
-        var precioTotal = preciosTotales[nombre];
+    let total = 0;
+    let mensaje = "Productos en el carrito:\n";
+    for (let nombre in preciosTotales) {
+        let precioTotal = preciosTotales[nombre];
         mensaje += nombre + ": " + precioTotal.toFixed(2) + "\n";
         total += precioTotal;
     }
