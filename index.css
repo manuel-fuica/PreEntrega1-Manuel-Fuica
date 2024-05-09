@@ -1,10 +1,39 @@
+.logo{
+    width: 300px;
+    height: 100px;
+}
+
+.imagenCarrito{
+    color : #81FE02;
+}
+
+.imagenBasurero{
+    color: red;
+}
+
+.navbar{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 30px;
+
+}
+
+.title{
+    text-align: center;
+    color: #81FE02;
+    text-decoration: underline;
+}
+
+
 h1{
     text-align: center;
     text-decoration: underline;
 }
 
 body {
-    background-color: #000000;
+    background-color: #0D0B0C;
 }
 
 .simulador {
@@ -14,7 +43,7 @@ body {
     grid-template-rows: 1 fr;
 }
 
-.imagenes {
+.productos {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -22,22 +51,63 @@ body {
     margin-bottom: 30px;
 }
 
-.imagenes img{
-    width: 250px;
+.imagenes{
+    width: 260px;
     height: 200px;
     border-radius: 30px;
+}
+
+.nombreProducto{
+    display: flex;
+    justify-content: center;
 }
 
 .boton{
     display: flex;
     justify-content: center;
-}
-.boton button{
-    width: 300px;
+    width: 200px;
     height: 30px;
     background-color: #81FE02;
-    border-radius: 30px;
+    border-radius: 5px;
 }
+
+input{
+    width: 250px;
+    height: 20px;
+    border-radius: 5px;
+    text-align: center;
+    margin: 10px 0 10px 0;
+}
+
+
+.boton-ingresar{
+    width: 200px;
+    height: 30px;
+    background-color: #81FE02;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+}
+
+table, th, td {
+    border: 1px solid #81FE02;
+    color: aliceblue;
+    text-align: center;
+}
+
+.imagen-basurero{
+    width: 30px;
+    height: 30px;
+    background-color: #000000;
+}
+
+.footer{
+    color: aliceblue;
+    text-align: center;
+    margin-top: 30px;
+}
+
+
 
 
 
