@@ -7,6 +7,10 @@
     color : #81FE02;
 }
 
+.imagenCarrito:hover{
+    cursor: pointer;
+}
+
 .imagenBasurero{
     color: red;
 }
