@@ -1,11 +1,12 @@
+//traigo los articulos desde el archivo articulos.json
 fetch("articulos.json")
     .then(response => response.json())
-    .then(articulos => {
-        const productos = Object.values(articulos);
-        renderizarProductos(productos);
+    .then(articulos => {//cuando la promesa se resuelve se ejecuta lo siguiente
+        const productos = Object.values(articulos);//obtiene los valores del objeto articulos y los convierte en un array
+        renderizarProductos(productos);//renderiza los productos
 
     })
-    .catch(error => {
+    .catch(error => {//en caso de no resolver la promesa me muestra este error en la consola
         console.error('Error al cargar el archivo JSON:', error);
     });
 class Producto {//creo la clase producto, la cual recibiar al crear un nuevo producto el nombre y precio
@@ -130,7 +131,6 @@ function renderizarProductos(productos) {//funcion para renderizar los productos
             if (isNaN(cantidad) || cantidad <= 0) {
                 Swal.fire({
                     title: "Por favor ingrese una cantidad valida",
-                    width: 320,
                     icon: "warning",
                     customClass: {
                         confirmButton: "boton-aceptar",
@@ -169,20 +169,43 @@ function renderizarProductos(productos) {//funcion para renderizar los productos
     }
 }
 
-function devolverProducto() {
-    alert("Deberá ingresar sus datos para coordinar la devolución del producto");
-
-    const nombre = prompt("Ingrese su nombre completo");
-    let telefono = prompt("Ingrese su teléfono");
+async function devolverProducto() {
+    let telefono = "";
+    let nombre = "";
+    const { value: formValues } = await Swal.fire({
+        title: "Debera ingresar sus datos para coordinar la devolucion del producto",
+        html: `
+            <label for="swal-input1">Nombre Completo</label><br>
+            <input id="swal-input1" class="swal2-input"><br>
+            <label for="swal-input2">Teléfono</label><br>
+            <input id="swal-input2" class="swal2-input"><br>
+        `,
+        focusConfirm: false,
+        preConfirm: () => {
+            return {
+            nombre: document.getElementById("swal-input1").value,
+            telefono: document.getElementById("swal-input2").value
+            };
+        }
+        });
+        if (formValues) {
+        console.log(formValues);
+        telefono = formValues.telefono;
+        nombre = formValues.nombre;
+        }
 
     // Valido que sean numeros
     if (isNaN(telefono) || telefono.trim() === "") {
-        alert("Por favor, ingrese un número de teléfono válido.");
+        Swal.fire({
+            title: 'Error!',
+            text: 'Debe ingresar un numero de telefono valido',
+            icon: 'error',
+            })
         return;
     }
 
     telefono = parseInt(telefono);
-    alert("Estimad@ " + nombre + "\nPronto uno de nuestros ejecutivos se contactará con usted, al número de teléfono " + telefono + " para coordinar la devolución del producto.\n Muchas gracias");
+    Swal.fire("Estimad@ \n" + nombre + "\nPronto uno de nuestros ejecutivos se contactará con usted, al número de teléfono: \n " + telefono + " \npara coordinar la devolución del producto.\n Muchas gracias");
 }
 
 function mostrarCarrito() {
@@ -203,12 +226,12 @@ function mostrarCarrito() {
         total += precioTotal;
     }
     mensaje += "\nPrecio total: $ " + total;
-    alert(mensaje);
+    Swal.fire(mensaje);
 }
 
 function pagar() {
     if (carrito.length === 0) {
-        alert("No hay productos en el carrito.");
+        Swal.fire("No hay productos en el carrito.");
     } else {
         let total = 0;
         for (let i = 0; i < carrito.length; i++) {
@@ -224,34 +247,53 @@ function pagar() {
         // Actualizo la tabla 
         renderizarCarrito(carrito);
 
-        alert("Pago exitoso.\nMuchas gracias por su compra.");
+        Swal.fire({
+            title: "Pago realizado",
+            icon: "success"
+            });;
         return;
     }
 }
 
 function ingresar() {
-    let opcion = parseInt(prompt("Eliga la opción que desea realizar:\n1- Devolver Producto\n2- Ver Carrito\n3- Pagar\n4- Salir"));
-
-    while (opcion !== 4) {
-        switch (opcion) {
-            case 1:
-                devolverProducto();
-                opcion = parseInt(prompt("Eliga la opción que desea realizar:\n1- Devolver Producto\n2- Ver Carrito\n3- Pagar\n4- Salir"));
-                break;
-            case 2:
-                mostrarCarrito();
-                opcion = parseInt(prompt("Eliga la opción que desea realizar:\n1- Devolver Producto\n2- Ver Carrito\n3- Pagar\n4- Salir"));
-                break;
-            case 3:
-                pagar();
-                opcion = parseInt(prompt("Eliga la opción que desea realizar:\n1- Devolver Producto\n2- Ver Carrito\n3- Pagar\n4- Salir"));
-                break;
-            default:
-                alert("Opción inválida. Por favor, ingrese un número válido.");
-                opcion = parseInt(prompt("Eliga la opción que desea realizar:\n1- Devolver Producto\n2- Ver Carrito\n3- Pagar\n4- Salir"));
-                break;
+    Swal.fire({
+        title: 'Bienvenido',
+        color: '#81FE02',
+        input: 'select',
+        inputOptions: {
+            '1': 'Devolver Producto',
+            '2': 'Ver Carrito',
+            '3': 'Pagar',
+            '4': 'Salir'
+        },
+        inputPlaceholder: 'Seleccione una opción',
+        showCancelButton: true,
+        customClass: {
+            popup: 'color-fondo'
+        },
+        inputValidator: (value) => {
+            if (!value) {
+                return 'Por favor, seleccione una opción.'
+            }
         }
-    }
+    }).then(async (result) => {
+        if (result.value) {
+            switch (result.value) {
+                case '1':
+                    await devolverProducto();
+                    break;
+                case '2':
+                    mostrarCarrito();
+                    break;
+                case '3':
+                    pagar();
+                    break;
+                case '4':
+                    salir();
+                    break;
+            }
+        }
+    });
 }
 
 //inicia el programa

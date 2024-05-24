@@ -7,6 +7,14 @@
     color : #81FE02;
 }
 
+/* .color-fondo, .color-fondo option{
+    background-color: #043852 !important;
+} */
+.swal2-popup.swal2-modal.swal2-show, .swal2-popup.swal2-modal.swal2-show option {
+    background-color: #043852 !important;
+    color: #81FE02 !important;
+}
+
 .imagenCarrito:hover{
     cursor: pointer;
 }
