@@ -1,4 +1,13 @@
+fetch("articulos.json")
+    .then(response => response.json())
+    .then(articulos => {
+        const productos = Object.values(articulos);
+        renderizarProductos(productos);
 
+    })
+    .catch(error => {
+        console.error('Error al cargar el archivo JSON:', error);
+    });
 class Producto {//creo la clase producto, la cual recibiar al crear un nuevo producto el nombre y precio
     constructor(nombre, precio, imagen) {
         this.nombre = nombre;
@@ -48,6 +57,11 @@ function renderizarCarrito(carrito) {
 
         botonBorrar.addEventListener("click", () => {
             eliminarDelCarrito(productoCarrito);
+            Swal.fire({
+                title: "Producto eliminado",
+                icon: "success",
+                width: 320
+                });
         })
 
         tr.append(botonBorrar);
@@ -113,7 +127,35 @@ function renderizarProductos(productos) {//funcion para renderizar los productos
         boton.addEventListener("click", () =>{//creo la funcion para que tome los valores dle input al hacer click
             const cantidad = parseInt(input.value);
 
+            if (isNaN(cantidad) || cantidad <= 0) {
+                Swal.fire({
+                    title: "Por favor ingrese una cantidad valida",
+                    width: 320,
+                    icon: "warning",
+                    customClass: {
+                        confirmButton: "boton-aceptar",
+                    }
+                });
+                return;
+            }
+
             agregarProducto(producto, cantidad);//ejecuto la funcion para agregar al carrito el nombre y la cantidad
+
+            Toastify({
+                text: "Producto agregado al carrito",
+                duration: 2000,
+                newWindow: true,
+                close: true,
+                gravity: "top", // `top` or `bottom`
+                position: "right", // `left`, `center` or `right`
+                stopOnFocus: true, // Prevents dismissing of toast on hover
+                style: {
+                    background: "linear-gradient(to right, #00b09b, #96c93d)",
+                },
+                onClick: function(){
+                    mostrarCarrito();//muestra el carrito al dar click en la notificacion
+                } // Callback after click
+                }).showToast();
 
             // console.log(cantidad)
         })
@@ -172,9 +214,6 @@ function pagar() {
         for (let i = 0; i < carrito.length; i++) {
             total += carrito[i].valorTotal;
         }
-        console.log(total);
-
-        alert("Total a pagar: " + total);
 
         // Limpio el almacenamiento local
         localStorage.clear();
@@ -228,14 +267,15 @@ svgElement.onclick = function() {
 const contenedor = document.getElementById("contenedor");//creo una variable contenedor que llama en el documento por el id contendor
 const tbodyCarrito = document.getElementById("carrito");//creo una variable tbodyCarrito que llama en el documento por el id carrito
 
-const productos = [//creo los 4 porductos para mostrar
-    new Producto("Poleras", 15000, "./img/poleras.avif"),
-    new Producto("Tazones", 10000, "./img/tazones.webp"),
-    new Producto("Cuadros", 20000, "./img/cuadros.jpeg"),
-    new Producto("Funko-Pop", 10000, "./img/funkoPops.webp"),
-]
+//ahora traere esto desde articulos.json
+// const productos = [//creo los 4 porductos para mostrar
+//     new Producto("Poleras", 15000, "./img/poleras.avif"),
+//     new Producto("Tazones", 10000, "./img/tazones.webp"),
+//     new Producto("Cuadros", 20000, "./img/cuadros.jpeg"),
+//     new Producto("Funko-Pop", 10000, "./img/funkoPops.webp"),
+// ]
 
 let carrito = [];//creo un array vacio carrito
 
 obtenerProductosLS();//muestra los productos del LS si los hay
-renderizarProductos(productos);//le paso el array de objetos productos para renderizar
+

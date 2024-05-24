@@ -1,0 +1,22 @@
+[
+    {
+        "nombre": "Poleras",
+        "precio": 15000,
+        "imagen": "./img/poleras.avif"
+    },
+    {
+        "nombre": "Tazones",
+        "precio": 10000,
+        "imagen": "./img/tazones.webp"
+    },
+    {
+        "nombre": "Cuadros",
+        "precio": 20000,
+        "imagen": "./img/cuadros.jpeg"
+    },
+    {
+        "nombre": "Funko-Pop",
+        "precio": 10000,
+        "imagen": "./img/funkoPops.webp"
+    }
+]
